@@ -1,0 +1,20 @@
+#查询某个表销量前5的产品，并按销量降序排列
+SELECT product, sales_total
+FROM
+(	SELECT product, sales_total,
+		RANK () OVER (ORDER BY sales_total DESC) AS sales_rank
+	FROM sales) ranked_sales
+WHERE sales_rank <=5;
+
+#找出每个部门工资最高的员工（使用窗口函数）
+SELECT name
+FROM
+(SELECT name,
+	RANK() OVER(PARTITION BY department ORDER BY salary DESC) AS salary_rank
+FROM salaries) AS ranked_salary
+WHERE salary_rank = 1;
+
+#计算每个客户的累计消费金额（使用窗口函数）
+SELECT name, sum(amount) AS total_sales#所有的窗口函数都最好加别名
+FROM sales
+GROUP BY name;
