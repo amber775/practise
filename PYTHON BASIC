@@ -1,0 +1,8 @@
+#用列表推导式创建一个包含1-100偶数的列表
+EVEN_NUMBER = [x for x in range(1,101) if x%2==0]
+print(EVEN_NUMBER)
+
+#用lambda函数计算一个列表中所有数的平方和
+x=[1,5,8,3,2]
+total_square = [i**2 for i in x]
+print(sum(total_square))
