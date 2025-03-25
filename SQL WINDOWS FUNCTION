@@ -18,3 +18,42 @@ WHERE salary_rank = 1;
 SELECT name, sum(amount) AS total_sales#所有的窗口函数都最好加别名
 FROM sales
 GROUP BY name;
+
+/*
+1.使用 CTE 计算按部门分组的累计工资（按 hire_date 排序）。
+2.结果中显示：name、department、salary、cumulative_salary（该部门内当前及之前所有员工工资总和）
+*/
+CREATE TABLE employees(
+	id INT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	department VARCHAR(50) NOT NULL,
+	salary INT NOT NULL,
+	hire_date DATE NOT NULL
+);
+
+INSERT INTO employees(id,name,department,salary,hire_date)
+VALUES
+	(1,'Alice','HR',6000,'2021-05-01'),
+	(2,'Bob','IT',8000,'2020-07-15'),
+	(3,'Carol','IT',7500,'2022-01-10'),
+	(4,'Dave','HR',6500,'2023-03-22'),
+	(5,'Eve','Finance',9000,'2019-11-30')
+
+SELECT * FROM employees;
+
+WITH cumulative AS(
+	SELECT name, department, salary, 
+	SUM(salary) OVER (PARTITION BY department ORDER BY hire_date)
+	FROM employees
+)
+SELECT * FROM cumulative;
+
+--使用递归查询生成日期序列
+WITH RECURSIVE date_sequence AS (
+    SELECT DATE '2024-01-01' AS generated_date
+    UNION ALL
+    SELECT (generated_date + INTERVAL '1 DAY')::DATE
+    FROM date_sequence
+    WHERE generated_date < DATE '2024-01-31'  -- 使用DATE关键字确保比较的是日期类型
+)
+SELECT * FROM date_sequence;
