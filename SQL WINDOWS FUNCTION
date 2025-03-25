@@ -57,3 +57,28 @@ WITH RECURSIVE date_sequence AS (
     WHERE generated_date < DATE '2024-01-31'  -- 使用DATE关键字确保比较的是日期类型
 )
 SELECT * FROM date_sequence;
+
+/*查询某个 id=2 的员工的所有下属，包括直接下属和间接下属*/
+WITH RECURSIVE level_num AS(
+	SELECT id,name,manager_id
+	FROM  employees
+	WHERE manager_id=2
+	UNION ALL
+
+	SELECT e.id,e.name,e.manager_id
+	FROM employees e
+	JOIN level_num l ON e.manager_id=l.id
+	
+	
+)
+SELECT * FROM level_num
+
+/*递归查询生成1-10的整数序列*/
+WITH RECURSIVE num AS(
+	SELECT INT '1' AS beginner
+	UNION ALL
+	SELECT beginner + INT '1'
+	FROM num
+	WHERE beginner <10
+)
+SELECT * FROM num
