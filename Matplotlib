@@ -1,0 +1,49 @@
+#使用 Matplotlib 绘制一个简单的折线图，表示 1 月到 6 月的销售额（单位：万元）
+import matplotlib.pyplot as plt
+
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+sales = [12, 15, 10, 18, 20, 17]
+
+plt.plot(months,sales,'r',marker = 'o',)
+
+plt.title('Sales Trend')
+plt.xlabel('Month')
+plt.ylabel('Sales(万元)')
+
+plt.show()
+
+
+#绘制双折线图比较两种产品 A 和 B，在 1 月到 6 月的销售额
+import matplotlib.pyplot as plt
+
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+sales_A = [12, 15, 10, 18, 20, 17]
+sales_B = [8, 14, 12, 16, 22, 19]
+
+plt.plot(months,sales_A,'b',marker='s',label='Product A')
+plt.plot(months,sales_B,'g',marker='D',label='Product B')
+plt.grid(True)
+plt.legend()
+
+
+#绘制一个函数 y = x^2 - 4x + 5 的曲线，x 取值范围是 -2 到 6
+import matplotlib.pyplot as plt
+import numpy as np
+
+def f(x):
+  return x**2-4*x+5
+
+x=np.linspace(-2,6,500)
+y=f(x)
+
+plt.plot(x,y,label='y=x^2-4x+5')
+plt.xticks([-2,0,2,4,6])
+
+plt.scatter(2,1,color='r')
+plt.annotate('Minimum Point',(2,1),xytext=(3,4),arrowprops=dict(facecolor='black',arrowstyle='->'))
+
+plt.title('Quadratic Function')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
